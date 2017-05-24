@@ -130,6 +130,7 @@ func newServerConfigV18() *serverConfigV18 {
 		Credential: mustGetNewCredential(),
 		Region:     globalMinioDefaultRegion,
 		Browser:    true,
+		Auth:       &authProviders{},
 		Logger:     &loggers{},
 		Notify:     &notifier{},
 	}
