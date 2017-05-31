@@ -289,11 +289,19 @@ func gatewayMain(ctx *cli.Context) {
 
 	}
 
-	apiServer := NewServerMux(serverAddr, registerHandlers(router, handlerFns...))
+	// Auth providers are set.
+	if len(serverConfig.Auth.GetAllAuthProviders()) > 0 {
+		globalIsAuthCreds = true
+	}
+
+	// Initialize global server credentials.
+	globalServerCreds = newServerCredentials()
+	globalServerCreds.SetCredential(serverConfig.GetCredential())
 
 	_, _, globalIsSSL, err = getSSLConfig()
 	fatalIf(err, "Invalid SSL key file")
 
+	apiServer := NewServerMux(serverAddr, registerHandlers(router, handlerFns...))
 	// Start server, automatically configures TLS if certs are available.
 	go func() {
 		cert, key := "", ""
@@ -323,7 +331,7 @@ func gatewayMain(ctx *cli.Context) {
 		}
 		checkUpdate(mode)
 		apiEndpoints := getAPIEndpoints(apiServer.Addr)
-		printGatewayStartupMessage(apiEndpoints, accessKey, secretKey, backendType)
+		printGatewayStartupMessage(apiEndpoints, backendType)
 	}
 
 	<-globalServiceDoneCh
