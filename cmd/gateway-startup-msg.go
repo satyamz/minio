@@ -23,12 +23,14 @@ import (
 
 // Prints the formatted startup message.
 func printGatewayStartupMessage(apiEndPoints []string, backendType string) {
+	strippedAPIEndpoints := stripStandardPorts(apiEndPoints)
+
 	// Prints credential.
-	printGatewayCommonMsg(apiEndPoints)
+	printGatewayCommonMsg(strippedAPIEndpoints)
 
 	// Prints `mc` cli configuration message chooses
 	// first endpoint as default.
-	printCLIAccessMsg(apiEndPoints[0], fmt.Sprintf("my%s", backendType))
+	printCLIAccessMsg(strippedAPIEndpoints[0], fmt.Sprintf("my%s", backendType))
 
 	// Prints documentation message.
 	printObjectAPIMsg()
@@ -52,4 +54,7 @@ func printGatewayCommonMsg(apiEndpoints []string) {
 	log.Println(colorBlue("SecretKey: ") + colorBold(fmt.Sprintf("%s ", cred.SecretKey)))
 
 	printAuthProviders()
+
+	log.Println(colorBlue("\nBrowser Access:"))
+	log.Println(fmt.Sprintf(getFormatStr(len(apiEndpointStr), 3), apiEndpointStr))
 }

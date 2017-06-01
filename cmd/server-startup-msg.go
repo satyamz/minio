@@ -163,10 +163,10 @@ func printCLIAccessMsg(endPoint string, alias string) {
 	// Configure 'mc', following block prints platform specific information for minio client.
 	log.Println(colorBlue("\nCommand-line Access: ") + mcQuickStartGuide)
 	if runtime.GOOS == globalWindowsOSName {
-		mcMessage := fmt.Sprintf("$ mc.exe config host add myminio %s %s %s", endPoint, cred.AccessKey, cred.SecretKey)
+		mcMessage := fmt.Sprintf("$ mc.exe config host add %s %s %s %s", alias, endPoint, cred.AccessKey, cred.SecretKey)
 		log.Println(fmt.Sprintf(getFormatStr(len(mcMessage), 3), mcMessage))
 	} else {
-		mcMessage := fmt.Sprintf("$ mc config host add myminio %s %s %s", endPoint, cred.AccessKey, cred.SecretKey)
+		mcMessage := fmt.Sprintf("$ mc config host add %s %s %s %s", alias, endPoint, cred.AccessKey, cred.SecretKey)
 		log.Println(fmt.Sprintf(getFormatStr(len(mcMessage), 3), mcMessage))
 	}
 }

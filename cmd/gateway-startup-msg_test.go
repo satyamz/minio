@@ -26,7 +26,7 @@ func TestPrintGatewayCommonMessage(t *testing.T) {
 	}
 	defer removeAll(root)
 
-	apiEndpoints := []string{"127.0.0.1:9000"}
+	apiEndpoints := []string{"http://127.0.0.1:9000"}
 	printGatewayCommonMsg(apiEndpoints)
 }
 
@@ -38,6 +38,6 @@ func TestPrintGatewayStartupMessage(t *testing.T) {
 	}
 	defer removeAll(root)
 
-	apiEndpoints := []string{"127.0.0.1:9000"}
+	apiEndpoints := []string{"http://127.0.0.1:9000"}
 	printGatewayStartupMessage(apiEndpoints, "azure")
 }
